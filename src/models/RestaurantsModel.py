@@ -14,7 +14,7 @@ class RestaurantModel():
                 resultset=cursor.fetchall()
 
                 for row in resultset:
-                    restaurant=Restaurant(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9])
+                    restaurant=Restaurant(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10])
                     restaurants.append(restaurant.to_JSON())
             connection.close
             return restaurants
@@ -22,19 +22,22 @@ class RestaurantModel():
             print(ex)
             raise Exception(ex)
     
-    def get_restaurant(self,id):
+    def get_restaurant(id):
         try:
             connection=get_connection()
             restaurant=[]
 
             with connection.cursor () as cursor:
-                cursor.execute("SELECT * FROM Restaurants WHERE id =%s",(id,))
+                cursor.execute("SELECT * FROM public.\"Restaurants\" WHERE id = %s", (id,))
+                
                 row=cursor.fetchone()
 
-                movie=None
+                
                 if row != None:
-                    restaurant=Restaurant(row[0],row[1],row[2],row[3])
+                    restaurant=Restaurant(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10])
                     restaurant=restaurant.to_JSON()
+                else:
+                    return restaurant.to_JSON()
 
             connection.close
             return restaurant
