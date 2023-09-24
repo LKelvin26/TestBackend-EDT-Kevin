@@ -1,0 +1,11 @@
+# Ignorar archivos .pyc
+*.pyc
+
+# Ignorar archivos generados por el entorno de desarrollo
+__pycache__/
+
+# Ignorar archivos de registro
+logs/
+
+# Ignorar archivos del entorno virtual
+env/
