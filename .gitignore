@@ -8,4 +8,4 @@ __pycache__/
 logs/
 
 # Ignorar archivos del entorno virtual
-env/
+venv/

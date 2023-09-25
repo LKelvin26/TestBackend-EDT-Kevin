@@ -1,5 +1,6 @@
-from flask import Blueprint,jsonify
+from flask import Blueprint,jsonify, request
 from models.RestaurantsModel import RestaurantModel
+
 
 main=Blueprint('movie_blueprint',__name__)
 
@@ -22,11 +23,16 @@ def get_restaurant(id):
     except Exception as ex:
         return jsonify({'message':str(ex)}),500
     
-@main.route('/restaurants/statistics?latitude=<x>&longitude=<y>&radius=<z>')
-
-def calculate_statistics(x, y, z):
+@main.route('/restaurants/statistics')
+def calculate_statistics():
     try:
-        restaurants=RestaurantModel.get_restaurant_in_radius(x,y,z)
+        # Obtén los parámetros de consulta desde request.args
+        latitude = float(request.args.get('latitude'))
+        longitude = float(request.args.get('longitude'))
+        radius = float(request.args.get('radius'))
+
+        restaurants = RestaurantModel.get_restaurant_in_radius(latitude, longitude, radius)
+        
          # Inicializa variables para calcular estadísticas
         count = len(restaurants)
         total_rating = 0.0
@@ -56,5 +62,4 @@ def calculate_statistics(x, y, z):
 
         return jsonify(results)
     except Exception as ex:
-        return jsonify({'message':str(ex)}),500
-    
+        return jsonify({'message': str(ex)}), 500
