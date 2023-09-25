@@ -6,6 +6,14 @@ main=Blueprint('restaurant_blueprint',__name__)
 ### CREATE
 @main.route('/create',methods=['GET', 'POST'])
 def create_restaurant():
+    """
+    Create a new restaurant.
+
+    This endpoint allows you to create a new restaurant by providing its name and rating in the request body.
+
+    :return: JSON response with the newly created restaurant.
+    :rtype: dict
+    """
     try:
         data = request.get_json()  # Obtén los datos JSON enviados en la solicitud
 
@@ -28,6 +36,16 @@ def create_restaurant():
 @main.route('/update/<id>', methods=['GET','POST'])
 def update_restaurant(id):
     try:
+        """
+        Update a restaurant by ID.
+
+        This endpoint allows you to update information about a restaurant by providing its unique ID and new data in the request body.
+
+        :param id: The ID of the restaurant to update.
+        :type id: str
+        :return: JSON response with the updated restaurant.
+        :rtype: dict
+        """
         data = request.get_json()  # Obtiene los datos JSON enviados en la solicitud
 
         # Extrae los campos del objeto JSON (por ejemplo, name y rating)
@@ -48,6 +66,16 @@ def update_restaurant(id):
 ### DELETE
 @main.route('/delete/<id>', methods=['GET','POST'])
 def delete_restaurant(id):
+    """
+    Delete a restaurant by ID.
+
+    This endpoint allows you to delete a restaurant by providing its unique ID.
+
+    :param id: The ID of the restaurant to delete.
+    :type id: str
+    :return: JSON response indicating the success of the operation.
+    :rtype: dict
+    """
     try:
         # Llama a la función de modelo para eliminar el restaurante
         deleted_restaurant = RestaurantModel.delete_restaurant(id)
@@ -71,7 +99,19 @@ def get_restaurants():
         return jsonify({'message':str(ex)}),500
         
 @main.route('/<id>')
+
 def get_restaurant(id):
+    """
+    Read a restaurant by ID.
+
+    This endpoint allows you to retrieve information about a restaurant by providing its unique ID.
+
+    :param id: The ID of the restaurant to retrieve.
+    :type id: str
+    :return: JSON response with the restaurant's information.
+    :rtype: dict
+    """
+    
     try:
         restaurant=RestaurantModel.get_restaurant(id)
         if restaurant != None:
@@ -85,6 +125,17 @@ def get_restaurant(id):
 ### Task 2
 @main.route('/statistics', methods=['GET'])
 def calculate_statistics():
+    """
+    Calculate statistics for restaurants in a given radius.
+
+    This endpoint allows you to calculate statistics (count, average rating, standard deviation of rating) for restaurants located within a specified radius from a given latitude and longitude.
+
+    :queryparam latitude: Latitude coordinate.
+    :queryparam longitude: Longitude coordinate.
+    :queryparam radius: Radius in meters.
+    :return: JSON response with the calculated statistics.
+    :rtype: dict
+    """
     try:
         # Obtén los parámetros de consulta desde request.args
         latitude = float(request.args.get('latitude'))
