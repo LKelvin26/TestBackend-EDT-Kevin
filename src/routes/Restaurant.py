@@ -89,7 +89,7 @@ def delete_restaurant(id):
         return jsonify({'error': str(ex)}), 500
     
 ### READ
-@main.route('/restaurants')
+@main.route('/')
 def get_restaurants():
     try:
 
