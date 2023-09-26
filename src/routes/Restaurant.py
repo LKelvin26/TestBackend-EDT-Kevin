@@ -3,6 +3,11 @@ from models.RestaurantsModel import RestaurantModel
 
 
 main=Blueprint('restaurant_blueprint',__name__)
+
+@main.route('/prueba')
+def prueba():
+    return jsonify({"Hola!":"mundo"})
+
 ### CREATE
 @main.route('/create',methods=['GET', 'POST'])
 def create_restaurant():
