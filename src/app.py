@@ -12,6 +12,6 @@ if __name__ == '__main__':
     app.register_blueprint(Restaurant.main, url_prefix='/restaurants')
     app.config.from_object(config['development'])
     app.register_error_handler(404, page_not_found)
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=80)
    
     
